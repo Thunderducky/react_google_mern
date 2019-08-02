@@ -4,17 +4,23 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start":"if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "start:prod": "node server.js",
     "client": "cd client && npm run start",
-    "install": "cd client && npm run install",
+    "install": "cd client && npm install",
     "build": "cd client && npm run build"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^4.1.1",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "if-env": "^1.0.4"
+    "express-session": "^1.16.2",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.6.7",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
