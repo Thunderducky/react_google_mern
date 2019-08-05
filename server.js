@@ -22,6 +22,21 @@ app.use(passport.session());
 app.post('/api/login', passport.authenticate("local"),  (req, res) => {
     res.json(req.user)
 })
+app.get('/api/logout', (req, res) => {
+    req.logout();
+    res.sendStatus(200);
+});
+
+app.get('/api/user/me', function(req, res){
+    if(req.user){
+        res.json({
+            email: req.user.email
+        })
+    } else {
+        res.sendStatus(401)
+    }
+    
+})
 
 app.use(function(req, res) {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
@@ -30,3 +45,10 @@ app.use(function(req, res) {
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/react-google-mern")
 
 app.listen(PORT, () => console.log(`I am listening... (on port ${PORT})`))
+
+process.on('SIGINT', () => {
+    mongoose.connection.close().then( () => {
+        console.log("Mongoose disconnected");
+        process.exit(0);
+    })
+})
