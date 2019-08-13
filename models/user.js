@@ -16,7 +16,7 @@ UserSchema.methods.checkPassword = function(password){
 }
 
 UserSchema.pre('save', function(next){
-    if(this.isNew){
+    if(!this.isNew){
         return Promise.resolve()
     }
     return bcrypt.genSalt(10).then(salt => {
